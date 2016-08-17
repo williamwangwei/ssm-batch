@@ -1,0 +1,215 @@
+@CHARSET "UTF-8";
+
+*{
+	padding: 0px;
+	margin: 0px;
+	font-size: 14px;
+}
+
+.content{
+	width:100%;
+	height:100%;
+	clear:both;
+	float:left;
+}
+
+.bottom321{
+	width: 49.5%;
+	height: 35%;
+	float: left;
+	
+}
+.bottom322{
+	width: 49%;
+	height: 35%;
+	float: left;
+	margin-left:1%; 
+}
+
+.imageDiv{
+	 width:100%;
+	 height:85%;
+	 position:relative;
+	 background-repeat:no-repeat;
+	 background-size:cover;
+	 background-position:center;
+}
+
+.bottom323{
+	margin-top:2px;
+	width: 49.5%;
+	height: 20%;
+	float: left;
+}
+.bottom324{
+	margin-top:2px;
+	width: 49%;
+	height: 20%;
+	float: left;
+	margin-left:1%; 
+}
+.bottom325{
+	margin-top:2px;
+	width: 49.5%;
+	height: 20%;
+	float: left;
+}
+.bottom326{
+	margin-top:2px;
+	width: 49%;
+	height: 20%;
+	float: left;
+	margin-left:1%; 
+}
+.bottom327{
+	width: 100%;
+	margin-top: 2px;
+	height: 23%;
+	float: left;
+}
+
+.easyui-tabs div p {
+	width: 100%;
+	height: 90%;
+}
+		
+/*************************主页内容中的文章列表样式*******************************/
+
+dl.article_list {
+	/*
+	border:1px solid #999;
+	margin-top:4px;
+	*/
+	width: 100%;
+} 
+
+dl.article_list dt {
+	height:30px;
+	width: 100%;
+	background:#6CACDE;
+	color:#FFF;
+	font-weight:bold;
+	
+}
+span.title_span_1 {
+	position:relative;
+	font-size:14px;
+	top:5px;
+	left:5px;
+	width: 100%;
+}
+
+span.more_span {
+	float:right;
+	padding-right:10px;
+}
+/*
+dl.article_list dt span a{
+	margin-left: 70%;
+}
+*/
+dl.article_list dd {
+	height:20%;
+	background:url("point.jpg") no-repeat;
+	background-position:12px 12px;
+	/*border-bottom:1px dotted #aaa;*/
+}
+dl.article_list dd a {
+	position:relative;
+	left:25px;
+	top:8px;
+}
+
+a.article_href:link,a.article_href:visited {
+	text-decoration:none;
+	color:#555;
+}
+
+a.article_href:hover {
+	text-decoration:underline;
+	color:#a33;
+}
+
+dl.index_l_article {
+	width:100%;
+	height:100%;
+}
+
+dl.index_p_article {
+	width:100%;
+	height:15%;
+}
+
+/* dl.index_r_article {
+	float:left;
+	width:393px;
+	margin-left:10px;
+}
+ */
+
+
+
+.flexslider {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	zoom: 1;
+}
+
+.flexslider .slides li {
+	width: 100%;
+	height: 85%;
+}
+
+.flexslider:hover .flex-next {
+	opacity: 0.8;
+	filter: alpha(opacity=25);
+}
+
+.flexslider:hover .flex-prev {
+	opacity: 0.8;
+	filter: alpha(opacity=25);
+}
+
+.flexslider:hover .flex-next:hover,
+.flexslider:hover .flex-prev:hover {
+	opacity: 1;
+	filter: alpha(opacity=50);
+}
+
+.flex-control-nav {
+	width: 100%;
+	position: absolute;
+	bottom: 20%;
+	text-align: center;
+}
+
+.flex-control-nav li {
+	margin: 0 2px;
+	display: inline-block;
+	zoom: 1;
+	*display: inline;
+}
+
+.flex-control-paging li a {
+	background: url(../easyui/image/dot.png) no-repeat 0 -16px;
+	display: block;
+	height: 16px;
+	overflow: hidden;
+	text-indent: -99em;
+	width: 16px;
+	cursor: pointer;
+}
+
+.flex-control-paging li a.flex-active,
+.flex-control-paging li.active a {
+	background-position: 0 0;
+}
+
+.flexslider .slides a img {
+	width: 100%;
+	height: 100%;
+	display: block;
+}
+			
