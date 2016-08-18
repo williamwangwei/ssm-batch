@@ -45,7 +45,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	
 	/* 进入前端系统 */
 	function project1(){
-		window.location.href="mybatis/login.jsp";
+		window.location.href="socket/index";
 	}
 	/* 进入前端系统 */
 	function enter1(){

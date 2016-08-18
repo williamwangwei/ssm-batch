@@ -1,2 +1,3 @@
+com\william\controller\SocketController.class
 com\william\socket\service\SocketService.class
 com\william\controller\LoginController.class
