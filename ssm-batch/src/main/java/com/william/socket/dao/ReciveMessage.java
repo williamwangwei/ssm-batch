@@ -10,4 +10,20 @@ package com.william.socket.dao;
  */
 public class ReciveMessage {
 
+	private String seqNo;
+	private String  recMessage;
+	public String getSeqNo() {
+		return seqNo;
+	}
+	public void setSeqNo(String seqNo) {
+		this.seqNo = seqNo;
+	}
+	public String getRecMessage() {
+		return recMessage;
+	}
+	public void setRecMessage(String recMessage) {
+		this.recMessage = recMessage;
+	}
+	
+	
 }

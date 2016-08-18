@@ -1,3 +1,5 @@
 com\william\controller\SocketController.class
 com\william\socket\service\SocketService.class
+com\william\socket\dao\ReciveMessage.class
+com\william\socket\dao\ReqMessage.class
 com\william\controller\LoginController.class

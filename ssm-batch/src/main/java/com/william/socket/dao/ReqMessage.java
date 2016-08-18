@@ -12,7 +12,7 @@ public class ReqMessage {
 
 	private String address;
 	private int port;
-	private int number;
+	private String number;
 	private String message;
 	
 	public String getAddress() {
@@ -27,10 +27,11 @@ public class ReqMessage {
 	public void setPort(int port) {
 		this.port = port;
 	}
-	public int getNumber() {
+	
+	public String getNumber() {
 		return number;
 	}
-	public void setNumber(int number) {
+	public void setNumber(String number) {
 		this.number = number;
 	}
 	public String getMessage() {
@@ -38,6 +39,11 @@ public class ReqMessage {
 	}
 	public void setMessage(String message) {
 		this.message = message;
+	}
+	@Override
+	public String toString() {
+		return "ReqMessage [address=" + address + ", port=" + port + ", number=" + number + ", message=" + message
+				+ "]";
 	}
 	
 	

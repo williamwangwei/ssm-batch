@@ -1,6 +1,7 @@
 package com.william.socket.service;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -9,28 +10,43 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.Iterator;
+import java.util.Random;
 
+
+import org.apache.log4j.Logger;
+import org.apache.poi.util.StringUtil;
+import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.dom4j.Node;
+import org.dom4j.io.SAXReader;
+
+import com.william.socket.dao.ReciveMessage;
 
 /**
  * Socket Service服务
+ * 
  * @author 王伟
  *
  */
 public class SocketService {
-	
+	private static final Logger logger = Logger.getLogger(SocketService.class);
+
 	/**
 	 * 发送消息
-	 * @param address	地址
-	 * @param port		端口
-	 * @param sendmsg	发送消息
+	 * 
+	 * @param address
+	 *            地址
+	 * @param port
+	 *            端口
+	 * @param sendmsg
+	 *            发送消息
 	 * @param number
 	 * @return
 	 */
-	public String SendMsg(String address, int port, String sendmsg, String number) {
+	public static String SendMsg(String address, int port, String sendmsg, String number) {
 		String resp = "";
 		StringBuilder sb = new StringBuilder();
 		try {
@@ -53,6 +69,7 @@ public class SocketService {
 				tString = "";
 			}
 
+			logger.info("tString=============>" + tString);
 			ow.write(tString + tmpString);
 			ow.flush();
 			socket.shutdownOutput();
@@ -84,28 +101,48 @@ public class SocketService {
 		}
 		return resp;
 	}
-	
+
 	/**
 	 * 替换序列号
+	 * 
 	 * @param req
 	 * @param inputSeqNo
 	 * @return
 	 */
-	public String replaceSeqNo(String req,String inputSeqNo){
-		
+	public static String replaceSeqNo(String req, String inputSeqNo) {
+
 		try {
 			org.dom4j.Document document = DocumentHelper.parseText(req);
 			Element root = document.getRootElement();
 			Node element = root.selectSingleNode("//data[@name='SEQ_NO']/field");
-			
-			element.setText(inputSeqNo);
-			
+			Random random = new Random();
+			int rdNum = random.nextInt(100000);
+			element.setText(inputSeqNo + rdNum);
+
 			req = document.asXML();
 		} catch (DocumentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return req;
+	}
+
+	public static void parserXml(String fileName, ReciveMessage recMes) throws DocumentException
+			 {
+		org.dom4j.Document document = DocumentHelper.parseText(fileName);
+		Element root = document.getRootElement();
+		Node element = root.selectSingleNode("//data[@name='SEQ_NO']/field");
+		
+		if(element.getText()!=null && !"".equals(element.getText())){
+			logger.info("element.getText()=================="+element.getText());
+			recMes.setSeqNo(element.getText());
+		}else{
+			Node element1 = root.selectSingleNode("//data[@name='RET_MSG']/field");
+			logger.info("element1.getText()=================="+element1.getText());
+			recMes.setSeqNo(element1.getText());
+		}
+		
+		recMes.setRecMessage(fileName);
 	}
 }
