@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.william.batch.dao.BatchManageMapper" >
+  <resultMap id="BaseResultMap" type="com.william.batch.model.BatchManage" >
+    <id column="JOB_ID" property="jobId" jdbcType="VARCHAR" />
+    <result column="ID" property="id" jdbcType="DECIMAL" />
+    <result column="BATCH_ID" property="batchId" jdbcType="VARCHAR" />
+    <result column="BATCH_NAME" property="batchName" jdbcType="VARCHAR" />
+    <result column="GROUP_ORDER" property="groupOrder" jdbcType="DECIMAL" />
+    <result column="JOB_NAME" property="jobName" jdbcType="VARCHAR" />
+    <result column="TRADE_CODE" property="tradeCode" jdbcType="VARCHAR" />
+    <result column="TRADE_TYPE" property="tradeType" jdbcType="VARCHAR" />
+    <result column="MULTI_THR_FLAG" property="multiThrFlag" jdbcType="VARCHAR" />
+    <result column="MAX_THREAD_NUM" property="maxThreadNum" jdbcType="DECIMAL" />
+    <result column="SKIP_FLAG" property="skipFlag" jdbcType="VARCHAR" />
+    <result column="RESET_FLAG" property="resetFlag" jdbcType="VARCHAR" />
+    <result column="DEPENDENCY" property="dependency" jdbcType="VARCHAR" />
+    <result column="NEXT_PROCESS_TYPE" property="nextProcessType" jdbcType="VARCHAR" />
+    <result column="CONDITION_DATA" property="conditionData" jdbcType="VARCHAR" />
+    <result column="HOLIDAY_FLAG" property="holidayFlag" jdbcType="VARCHAR" />
+    <result column="JOB_STATE" property="jobState" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+    <result column="CREATE_USER" property="createUser" jdbcType="VARCHAR" />
+    <result column="INPUT_DATE" property="inputDate" jdbcType="VARCHAR" />
+    <result column="TELLER_ID" property="tellerId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    JOB_ID, ID, BATCH_ID, BATCH_NAME, GROUP_ORDER, JOB_NAME, TRADE_CODE, TRADE_TYPE, 
+    MULTI_THR_FLAG, MAX_THREAD_NUM, SKIP_FLAG, RESET_FLAG, DEPENDENCY, NEXT_PROCESS_TYPE, 
+    CONDITION_DATA, HOLIDAY_FLAG, JOB_STATE, CREATE_DATE, CREATE_USER, INPUT_DATE, TELLER_ID
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from BATCH_MANAGE
+    where JOB_ID = #{jobId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from BATCH_MANAGE
+    where JOB_ID = #{jobId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.william.batch.model.BatchManage" >
+    insert into BATCH_MANAGE (JOB_ID, ID, BATCH_ID, 
+      BATCH_NAME, GROUP_ORDER, JOB_NAME, 
+      TRADE_CODE, TRADE_TYPE, MULTI_THR_FLAG, 
+      MAX_THREAD_NUM, SKIP_FLAG, RESET_FLAG, 
+      DEPENDENCY, NEXT_PROCESS_TYPE, CONDITION_DATA, 
+      HOLIDAY_FLAG, JOB_STATE, CREATE_DATE, 
+      CREATE_USER, INPUT_DATE, TELLER_ID
+      )
+    values (#{jobId,jdbcType=VARCHAR}, #{id,jdbcType=DECIMAL}, #{batchId,jdbcType=VARCHAR}, 
+      #{batchName,jdbcType=VARCHAR}, #{groupOrder,jdbcType=DECIMAL}, #{jobName,jdbcType=VARCHAR}, 
+      #{tradeCode,jdbcType=VARCHAR}, #{tradeType,jdbcType=VARCHAR}, #{multiThrFlag,jdbcType=VARCHAR}, 
+      #{maxThreadNum,jdbcType=DECIMAL}, #{skipFlag,jdbcType=VARCHAR}, #{resetFlag,jdbcType=VARCHAR}, 
+      #{dependency,jdbcType=VARCHAR}, #{nextProcessType,jdbcType=VARCHAR}, #{conditionData,jdbcType=VARCHAR}, 
+      #{holidayFlag,jdbcType=VARCHAR}, #{jobState,jdbcType=VARCHAR}, #{createDate,jdbcType=VARCHAR}, 
+      #{createUser,jdbcType=VARCHAR}, #{inputDate,jdbcType=VARCHAR}, #{tellerId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.william.batch.model.BatchManage" >
+    insert into BATCH_MANAGE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="jobId != null" >
+        JOB_ID,
+      </if>
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="batchId != null" >
+        BATCH_ID,
+      </if>
+      <if test="batchName != null" >
+        BATCH_NAME,
+      </if>
+      <if test="groupOrder != null" >
+        GROUP_ORDER,
+      </if>
+      <if test="jobName != null" >
+        JOB_NAME,
+      </if>
+      <if test="tradeCode != null" >
+        TRADE_CODE,
+      </if>
+      <if test="tradeType != null" >
+        TRADE_TYPE,
+      </if>
+      <if test="multiThrFlag != null" >
+        MULTI_THR_FLAG,
+      </if>
+      <if test="maxThreadNum != null" >
+        MAX_THREAD_NUM,
+      </if>
+      <if test="skipFlag != null" >
+        SKIP_FLAG,
+      </if>
+      <if test="resetFlag != null" >
+        RESET_FLAG,
+      </if>
+      <if test="dependency != null" >
+        DEPENDENCY,
+      </if>
+      <if test="nextProcessType != null" >
+        NEXT_PROCESS_TYPE,
+      </if>
+      <if test="conditionData != null" >
+        CONDITION_DATA,
+      </if>
+      <if test="holidayFlag != null" >
+        HOLIDAY_FLAG,
+      </if>
+      <if test="jobState != null" >
+        JOB_STATE,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="createUser != null" >
+        CREATE_USER,
+      </if>
+      <if test="inputDate != null" >
+        INPUT_DATE,
+      </if>
+      <if test="tellerId != null" >
+        TELLER_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="jobId != null" >
+        #{jobId,jdbcType=VARCHAR},
+      </if>
+      <if test="id != null" >
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="batchId != null" >
+        #{batchId,jdbcType=VARCHAR},
+      </if>
+      <if test="batchName != null" >
+        #{batchName,jdbcType=VARCHAR},
+      </if>
+      <if test="groupOrder != null" >
+        #{groupOrder,jdbcType=DECIMAL},
+      </if>
+      <if test="jobName != null" >
+        #{jobName,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeCode != null" >
+        #{tradeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeType != null" >
+        #{tradeType,jdbcType=VARCHAR},
+      </if>
+      <if test="multiThrFlag != null" >
+        #{multiThrFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="maxThreadNum != null" >
+        #{maxThreadNum,jdbcType=DECIMAL},
+      </if>
+      <if test="skipFlag != null" >
+        #{skipFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="resetFlag != null" >
+        #{resetFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="dependency != null" >
+        #{dependency,jdbcType=VARCHAR},
+      </if>
+      <if test="nextProcessType != null" >
+        #{nextProcessType,jdbcType=VARCHAR},
+      </if>
+      <if test="conditionData != null" >
+        #{conditionData,jdbcType=VARCHAR},
+      </if>
+      <if test="holidayFlag != null" >
+        #{holidayFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="jobState != null" >
+        #{jobState,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="inputDate != null" >
+        #{inputDate,jdbcType=VARCHAR},
+      </if>
+      <if test="tellerId != null" >
+        #{tellerId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.william.batch.model.BatchManage" >
+    update BATCH_MANAGE
+    <set >
+      <if test="id != null" >
+        ID = #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="batchId != null" >
+        BATCH_ID = #{batchId,jdbcType=VARCHAR},
+      </if>
+      <if test="batchName != null" >
+        BATCH_NAME = #{batchName,jdbcType=VARCHAR},
+      </if>
+      <if test="groupOrder != null" >
+        GROUP_ORDER = #{groupOrder,jdbcType=DECIMAL},
+      </if>
+      <if test="jobName != null" >
+        JOB_NAME = #{jobName,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeCode != null" >
+        TRADE_CODE = #{tradeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeType != null" >
+        TRADE_TYPE = #{tradeType,jdbcType=VARCHAR},
+      </if>
+      <if test="multiThrFlag != null" >
+        MULTI_THR_FLAG = #{multiThrFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="maxThreadNum != null" >
+        MAX_THREAD_NUM = #{maxThreadNum,jdbcType=DECIMAL},
+      </if>
+      <if test="skipFlag != null" >
+        SKIP_FLAG = #{skipFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="resetFlag != null" >
+        RESET_FLAG = #{resetFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="dependency != null" >
+        DEPENDENCY = #{dependency,jdbcType=VARCHAR},
+      </if>
+      <if test="nextProcessType != null" >
+        NEXT_PROCESS_TYPE = #{nextProcessType,jdbcType=VARCHAR},
+      </if>
+      <if test="conditionData != null" >
+        CONDITION_DATA = #{conditionData,jdbcType=VARCHAR},
+      </if>
+      <if test="holidayFlag != null" >
+        HOLIDAY_FLAG = #{holidayFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="jobState != null" >
+        JOB_STATE = #{jobState,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null" >
+        CREATE_USER = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="inputDate != null" >
+        INPUT_DATE = #{inputDate,jdbcType=VARCHAR},
+      </if>
+      <if test="tellerId != null" >
+        TELLER_ID = #{tellerId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where JOB_ID = #{jobId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.william.batch.model.BatchManage" >
+    update BATCH_MANAGE
+    set ID = #{id,jdbcType=DECIMAL},
+      BATCH_ID = #{batchId,jdbcType=VARCHAR},
+      BATCH_NAME = #{batchName,jdbcType=VARCHAR},
+      GROUP_ORDER = #{groupOrder,jdbcType=DECIMAL},
+      JOB_NAME = #{jobName,jdbcType=VARCHAR},
+      TRADE_CODE = #{tradeCode,jdbcType=VARCHAR},
+      TRADE_TYPE = #{tradeType,jdbcType=VARCHAR},
+      MULTI_THR_FLAG = #{multiThrFlag,jdbcType=VARCHAR},
+      MAX_THREAD_NUM = #{maxThreadNum,jdbcType=DECIMAL},
+      SKIP_FLAG = #{skipFlag,jdbcType=VARCHAR},
+      RESET_FLAG = #{resetFlag,jdbcType=VARCHAR},
+      DEPENDENCY = #{dependency,jdbcType=VARCHAR},
+      NEXT_PROCESS_TYPE = #{nextProcessType,jdbcType=VARCHAR},
+      CONDITION_DATA = #{conditionData,jdbcType=VARCHAR},
+      HOLIDAY_FLAG = #{holidayFlag,jdbcType=VARCHAR},
+      JOB_STATE = #{jobState,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      CREATE_USER = #{createUser,jdbcType=VARCHAR},
+      INPUT_DATE = #{inputDate,jdbcType=VARCHAR},
+      TELLER_ID = #{tellerId,jdbcType=VARCHAR}
+    where JOB_ID = #{jobId,jdbcType=VARCHAR}
+  </update>
+</mapper>

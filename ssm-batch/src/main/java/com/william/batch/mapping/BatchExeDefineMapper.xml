@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.william.batch.dao.BatchExeDefineMapper" >
+  <resultMap id="BaseResultMap" type="com.william.batch.model.BatchExeDefine" >
+    <id column="BATCH_ID" property="batchId" jdbcType="VARCHAR" />
+    <result column="ID" property="id" jdbcType="DECIMAL" />
+    <result column="BATCH_NAME" property="batchName" jdbcType="VARCHAR" />
+    <result column="EXE_ORDER" property="exeOrder" jdbcType="DECIMAL" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+    <result column="CREATE_USER" property="createUser" jdbcType="VARCHAR" />
+    <result column="INPUT_DATE" property="inputDate" jdbcType="VARCHAR" />
+    <result column="TELLER_ID" property="tellerId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    BATCH_ID, ID, BATCH_NAME, EXE_ORDER, CREATE_DATE, CREATE_USER, INPUT_DATE, TELLER_ID
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from BATCH_EXE_DEFINE
+    where BATCH_ID = #{batchId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from BATCH_EXE_DEFINE
+    where BATCH_ID = #{batchId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.william.batch.model.BatchExeDefine" >
+    insert into BATCH_EXE_DEFINE (BATCH_ID, ID, BATCH_NAME, 
+      EXE_ORDER, CREATE_DATE, CREATE_USER, 
+      INPUT_DATE, TELLER_ID)
+    values (#{batchId,jdbcType=VARCHAR}, #{id,jdbcType=DECIMAL}, #{batchName,jdbcType=VARCHAR}, 
+      #{exeOrder,jdbcType=DECIMAL}, #{createDate,jdbcType=VARCHAR}, #{createUser,jdbcType=VARCHAR}, 
+      #{inputDate,jdbcType=VARCHAR}, #{tellerId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.william.batch.model.BatchExeDefine" >
+    insert into BATCH_EXE_DEFINE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="batchId != null" >
+        BATCH_ID,
+      </if>
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="batchName != null" >
+        BATCH_NAME,
+      </if>
+      <if test="exeOrder != null" >
+        EXE_ORDER,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="createUser != null" >
+        CREATE_USER,
+      </if>
+      <if test="inputDate != null" >
+        INPUT_DATE,
+      </if>
+      <if test="tellerId != null" >
+        TELLER_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="batchId != null" >
+        #{batchId,jdbcType=VARCHAR},
+      </if>
+      <if test="id != null" >
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="batchName != null" >
+        #{batchName,jdbcType=VARCHAR},
+      </if>
+      <if test="exeOrder != null" >
+        #{exeOrder,jdbcType=DECIMAL},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="inputDate != null" >
+        #{inputDate,jdbcType=VARCHAR},
+      </if>
+      <if test="tellerId != null" >
+        #{tellerId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.william.batch.model.BatchExeDefine" >
+    update BATCH_EXE_DEFINE
+    <set >
+      <if test="id != null" >
+        ID = #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="batchName != null" >
+        BATCH_NAME = #{batchName,jdbcType=VARCHAR},
+      </if>
+      <if test="exeOrder != null" >
+        EXE_ORDER = #{exeOrder,jdbcType=DECIMAL},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null" >
+        CREATE_USER = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="inputDate != null" >
+        INPUT_DATE = #{inputDate,jdbcType=VARCHAR},
+      </if>
+      <if test="tellerId != null" >
+        TELLER_ID = #{tellerId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where BATCH_ID = #{batchId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.william.batch.model.BatchExeDefine" >
+    update BATCH_EXE_DEFINE
+    set ID = #{id,jdbcType=DECIMAL},
+      BATCH_NAME = #{batchName,jdbcType=VARCHAR},
+      EXE_ORDER = #{exeOrder,jdbcType=DECIMAL},
+      CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      CREATE_USER = #{createUser,jdbcType=VARCHAR},
+      INPUT_DATE = #{inputDate,jdbcType=VARCHAR},
+      TELLER_ID = #{tellerId,jdbcType=VARCHAR}
+    where BATCH_ID = #{batchId,jdbcType=VARCHAR}
+  </update>
+</mapper>

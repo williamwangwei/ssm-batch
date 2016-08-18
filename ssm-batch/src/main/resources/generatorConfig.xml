@@ -2,37 +2,40 @@
 <!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 <generatorConfiguration>
 	<!-- 数据库驱动包位置 -->
-	<!-- <classPathEntry location="D:\software\lib\mysql-connector-java-5.1.21.jar" /> -->
-	<classPathEntry location="D:\workspace\stsworkspace\workspace05\mybatis01\lib\mysql-connector-java-5.1.18-bin.jar" />
+	<classPathEntry location="D:/jar/oracle/ojdbc5.jar" />
+	<!-- <classPathEntry location="D:\workspace\stsworkspace\workspace05\mybatis01\lib\mysql-connector-java-5.1.18-bin.jar" /> -->
 	<context id="MysqlTables" targetRuntime="MyBatis3">
 		<commentGenerator>
 			<property name="suppressAllComments" value="true" />
 		</commentGenerator>
 		<!-- 数据库链接URL、用户名、密码 -->
-		<jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/jeesite" userId="root" password="123456">
-		<!-- <jdbcConnection driverClass="oracle.jdbc.driver.OracleDriver" connectionURL="jdbc:oracle:thin:@localhost:1521:orcl" userId="msa" password="msa"> -->
+		<!-- <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/jeesite" userId="root" password="123456"> -->
+		<jdbcConnection driverClass="oracle.jdbc.driver.OracleDriver" 
+						connectionURL="jdbc:oracle:thin:@localhost:1521:orcl" 
+						userId="scott" 
+						password="123456">
 		</jdbcConnection>
 		<javaTypeResolver>
 			<property name="forceBigDecimals" value="false" />
 		</javaTypeResolver>
 		<!-- 生成模型的包名和位置 -->
-		<javaModelGenerator targetPackage="sy.model" targetProject="testmybatis\src\main\java">
+		<javaModelGenerator targetPackage="com.william.batch.model" targetProject="ssm-batch\src\main\java">
 			<property name="enableSubPackages" value="true" />
 			<property name="trimStrings" value="true" />
 		</javaModelGenerator>
 		<!-- 生成的映射文件包名和位置 -->
-		<sqlMapGenerator targetPackage="sy.mapping" targetProject="testmybatis\src\main\java">
+		<sqlMapGenerator targetPackage="com.william.batch.mapping" targetProject="ssm-batch\src\main\java">
 			<property name="enableSubPackages" value="true" />
 		</sqlMapGenerator>
 		<!-- 生成DAO的包名和位置 -->
-		<javaClientGenerator type="XMLMAPPER" targetPackage="sy.dao" targetProject="testmybatis\src\main\java">
+		<javaClientGenerator type="XMLMAPPER" targetPackage="com.william.batch.dao" targetProject="ssm-batch\src\main\java">
 			<property name="enableSubPackages" value="true" />
 		</javaClientGenerator>
 		<!-- 要生成那些表(更改tableName和domainObjectName就可以) -->
-		<table tableName="sys_user" domainObjectName="SysUser" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />
-		<table tableName="sys_menu" domainObjectName="SysMenu" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />
-		<table tableName="sys_role" domainObjectName="SysRole" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />
-		<table tableName="sys_user_role" domainObjectName="SysUserRole" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />
+		<table tableName="BATCH_EXE_DEFINE" domainObjectName="BatchExeDefine" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />
+		<table tableName="BATCH_MANAGE" domainObjectName="BatchManage" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />
+		<table tableName="BATCH_JOB_DEFINE" domainObjectName="BatchJobDefine" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />
+		
 		
 	</context>
 </generatorConfiguration>

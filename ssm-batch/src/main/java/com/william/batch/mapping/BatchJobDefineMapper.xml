@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.william.batch.dao.BatchJobDefineMapper" >
+  <resultMap id="BaseResultMap" type="com.william.batch.model.BatchJobDefine" >
+    <id column="JOB_ID" property="jobId" jdbcType="VARCHAR" />
+    <result column="ID" property="id" jdbcType="DECIMAL" />
+    <result column="JOB_NAME" property="jobName" jdbcType="VARCHAR" />
+    <result column="PRO_NAME" property="proName" jdbcType="VARCHAR" />
+    <result column="PROFILE_FLAG" property="profileFlag" jdbcType="VARCHAR" />
+    <result column="PROFILE_ID" property="profileId" jdbcType="VARCHAR" />
+    <result column="MANUAL_FLAG" property="manualFlag" jdbcType="VARCHAR" />
+    <result column="JOB_DETAIL" property="jobDetail" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+    <result column="CREATE_USER" property="createUser" jdbcType="VARCHAR" />
+    <result column="INPUT_DATE" property="inputDate" jdbcType="VARCHAR" />
+    <result column="TELLER_ID" property="tellerId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    JOB_ID, ID, JOB_NAME, PRO_NAME, PROFILE_FLAG, PROFILE_ID, MANUAL_FLAG, JOB_DETAIL, 
+    CREATE_DATE, CREATE_USER, INPUT_DATE, TELLER_ID
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from BATCH_JOB_DEFINE
+    where JOB_ID = #{jobId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from BATCH_JOB_DEFINE
+    where JOB_ID = #{jobId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.william.batch.model.BatchJobDefine" >
+    insert into BATCH_JOB_DEFINE (JOB_ID, ID, JOB_NAME, 
+      PRO_NAME, PROFILE_FLAG, PROFILE_ID, 
+      MANUAL_FLAG, JOB_DETAIL, CREATE_DATE, 
+      CREATE_USER, INPUT_DATE, TELLER_ID
+      )
+    values (#{jobId,jdbcType=VARCHAR}, #{id,jdbcType=DECIMAL}, #{jobName,jdbcType=VARCHAR}, 
+      #{proName,jdbcType=VARCHAR}, #{profileFlag,jdbcType=VARCHAR}, #{profileId,jdbcType=VARCHAR}, 
+      #{manualFlag,jdbcType=VARCHAR}, #{jobDetail,jdbcType=VARCHAR}, #{createDate,jdbcType=VARCHAR}, 
+      #{createUser,jdbcType=VARCHAR}, #{inputDate,jdbcType=VARCHAR}, #{tellerId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.william.batch.model.BatchJobDefine" >
+    insert into BATCH_JOB_DEFINE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="jobId != null" >
+        JOB_ID,
+      </if>
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="jobName != null" >
+        JOB_NAME,
+      </if>
+      <if test="proName != null" >
+        PRO_NAME,
+      </if>
+      <if test="profileFlag != null" >
+        PROFILE_FLAG,
+      </if>
+      <if test="profileId != null" >
+        PROFILE_ID,
+      </if>
+      <if test="manualFlag != null" >
+        MANUAL_FLAG,
+      </if>
+      <if test="jobDetail != null" >
+        JOB_DETAIL,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="createUser != null" >
+        CREATE_USER,
+      </if>
+      <if test="inputDate != null" >
+        INPUT_DATE,
+      </if>
+      <if test="tellerId != null" >
+        TELLER_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="jobId != null" >
+        #{jobId,jdbcType=VARCHAR},
+      </if>
+      <if test="id != null" >
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="jobName != null" >
+        #{jobName,jdbcType=VARCHAR},
+      </if>
+      <if test="proName != null" >
+        #{proName,jdbcType=VARCHAR},
+      </if>
+      <if test="profileFlag != null" >
+        #{profileFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="profileId != null" >
+        #{profileId,jdbcType=VARCHAR},
+      </if>
+      <if test="manualFlag != null" >
+        #{manualFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="jobDetail != null" >
+        #{jobDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="inputDate != null" >
+        #{inputDate,jdbcType=VARCHAR},
+      </if>
+      <if test="tellerId != null" >
+        #{tellerId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.william.batch.model.BatchJobDefine" >
+    update BATCH_JOB_DEFINE
+    <set >
+      <if test="id != null" >
+        ID = #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="jobName != null" >
+        JOB_NAME = #{jobName,jdbcType=VARCHAR},
+      </if>
+      <if test="proName != null" >
+        PRO_NAME = #{proName,jdbcType=VARCHAR},
+      </if>
+      <if test="profileFlag != null" >
+        PROFILE_FLAG = #{profileFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="profileId != null" >
+        PROFILE_ID = #{profileId,jdbcType=VARCHAR},
+      </if>
+      <if test="manualFlag != null" >
+        MANUAL_FLAG = #{manualFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="jobDetail != null" >
+        JOB_DETAIL = #{jobDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null" >
+        CREATE_USER = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="inputDate != null" >
+        INPUT_DATE = #{inputDate,jdbcType=VARCHAR},
+      </if>
+      <if test="tellerId != null" >
+        TELLER_ID = #{tellerId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where JOB_ID = #{jobId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.william.batch.model.BatchJobDefine" >
+    update BATCH_JOB_DEFINE
+    set ID = #{id,jdbcType=DECIMAL},
+      JOB_NAME = #{jobName,jdbcType=VARCHAR},
+      PRO_NAME = #{proName,jdbcType=VARCHAR},
+      PROFILE_FLAG = #{profileFlag,jdbcType=VARCHAR},
+      PROFILE_ID = #{profileId,jdbcType=VARCHAR},
+      MANUAL_FLAG = #{manualFlag,jdbcType=VARCHAR},
+      JOB_DETAIL = #{jobDetail,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      CREATE_USER = #{createUser,jdbcType=VARCHAR},
+      INPUT_DATE = #{inputDate,jdbcType=VARCHAR},
+      TELLER_ID = #{tellerId,jdbcType=VARCHAR}
+    where JOB_ID = #{jobId,jdbcType=VARCHAR}
+  </update>
+</mapper>
