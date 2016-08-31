@@ -1,5 +1,11 @@
 F:\code\ssm-batch\ssm-batch\src\main\java\com\william\controller\SocketController.java
+F:\code\ssm-batch\ssm-batch\src\main\java\com\william\batch\model\BatchExeDefine.java
+F:\code\ssm-batch\ssm-batch\src\main\java\com\william\batch\model\BatchManage.java
 F:\code\ssm-batch\ssm-batch\src\main\java\com\william\socket\service\SocketService.java
 F:\code\ssm-batch\ssm-batch\src\main\java\com\william\controller\LoginController.java
 F:\code\ssm-batch\ssm-batch\src\main\java\com\william\socket\dao\ReqMessage.java
+F:\code\ssm-batch\ssm-batch\src\main\java\com\william\batch\model\BatchJobDefine.java
+F:\code\ssm-batch\ssm-batch\src\main\java\com\william\batch\dao\BatchManageMapper.java
 F:\code\ssm-batch\ssm-batch\src\main\java\com\william\socket\dao\ReciveMessage.java
+F:\code\ssm-batch\ssm-batch\src\main\java\com\william\batch\dao\BatchExeDefineMapper.java
+F:\code\ssm-batch\ssm-batch\src\main\java\com\william\batch\dao\BatchJobDefineMapper.java

@@ -1,5 +1,11 @@
 com\william\controller\SocketController.class
+com\william\batch\model\BatchJobDefine.class
+com\william\batch\dao\BatchManageMapper.class
 com\william\socket\service\SocketService.class
-com\william\socket\dao\ReciveMessage.class
+com\william\batch\dao\BatchJobDefineMapper.class
 com\william\socket\dao\ReqMessage.class
+com\william\batch\model\BatchManage.class
+com\william\batch\dao\BatchExeDefineMapper.class
+com\william\socket\dao\ReciveMessage.class
 com\william\controller\LoginController.class
+com\william\batch\model\BatchExeDefine.class
