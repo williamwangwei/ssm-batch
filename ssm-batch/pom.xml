@@ -120,11 +120,25 @@
 			<groupId>org.apache.activemq</groupId>
 			<artifactId>activemq-all</artifactId>
 		</dependency>
+
+		<dependency>
+			<groupId>org.apache.xbean</groupId>
+			<artifactId>xbean-spring</artifactId>
+		</dependency>
+		
+		<!-- spring JMS支持 -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jms</artifactId>
+		</dependency>
+		<!-- Active mq 连接池 -->
+		<dependency>
+			<groupId>org.apache.activemq</groupId>
+			<artifactId>activemq-pool</artifactId>
+		</dependency>
+		
 	</dependencies>
-	<dependency>
-		<groupId>org.apache.xbean</groupId>
-		<artifactId>xbean-spring</artifactId>
-	</dependency>
+
 
 	<build>
 		<finalName>ssm-batch</finalName>

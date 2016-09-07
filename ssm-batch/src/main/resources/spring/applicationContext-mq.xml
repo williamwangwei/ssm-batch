@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd">
+
+	<!-- 数据库连接池 -->
+	<!-- 加载配置文件 -->
+	<context:property-placeholder location="classpath:properties/*.properties" />
+	
+	<!-- 配置  activeMq broker-->
+	<!-- <bean id="broker" class="org.apache.activemq.broker.BrokerService" init-method="start" destroy-method="stop">
+		<property name="brokerName" value="myBroker"></property>
+		<property name="persistent" value="false"></property>
+		<property name="transportConnectorURIs">
+			<list>
+				<value>${activemq.url}</value>
+			</list>
+		</property>
+	</bean> -->
+	
+	<!-- 添加配置
+	
+	<broker brokername="test-broker" persistent=true xmlns="http://activema.apache.org/schema/core">
+		<persistenceAdapter>
+			<jdbcPersistenceAdapter dataSource="#mysql-ds"></jdbcPersistenceAdapter>
+		</persistenceAdapter>
+	</broker>
+	
+	<bean id="mysql-ds" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+		<property name="driverClassName" value="${jdbc.driver}" />
+		<property name="maxActive" value="10" />
+		<property name="minIdle" value="5" />
+	</bean> -->
+	
+	
+	<!-- 配置JMS连接工厂   使用的是ACTIVEMQ POOL  提升性能-->
+	<bean id="jmsFactory" class="org.apache.activemq.pool.PooledConnectionFactory" destroy-method="stop">
+		<property name="connectionFactory">
+			<bean class="org.apache.activemq.ActiveMQConnectionFactory">
+				<property name="brokerURL">
+					<value>${activemq.url}</value>
+				</property>
+			</bean>
+		</property>
+		
+		<property name="maxConnections" value="100"></property>
+	</bean>
+	<!-- 设定目标队列 -->
+	<bean id="destination" class="org.apache.activemq.command.ActiveMQQueue">
+		<constructor-arg index="0" value="spring-queue"></constructor-arg>
+	</bean>
+	<!-- 配置JMSTEMPlate  -->
+	<bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+		<property name="connectionFactory" ref="jmsFactory"></property>
+		<property name="defaultDestination" ref="destination"></property>
+		
+		<property name="messageConverter">
+			<bean class="org.springframework.jms.support.converter.SimpleMessageConverter"></bean>
+		</property>
+	</bean>
+	
+	
+	
+	<!-- 设定目标主题 -->
+	<bean id="destinationTopic" class="org.apache.activemq.command.ActiveMQTopic">
+		<constructor-arg index="0" value="spring-topic"></constructor-arg>
+	</bean>
+	<!-- 配置jmsTopicTemplate  -->
+	<bean id="jmsTopicTemplate" class="org.springframework.jms.core.JmsTemplate">
+		<property name="connectionFactory" ref="jmsFactory"></property>
+		<property name="defaultDestination" ref="destinationTopic"></property>
+		
+		<property name="messageConverter">
+			<bean class="org.springframework.jms.support.converter.SimpleMessageConverter"></bean>
+		</property>
+	</bean>
+	
+	<!-- JMS MESSAGE LISTENER -->
+	<bean id="messageListener" class="com.william.active.jms.service.SpringMyMessageListener"></bean>
+	<!-- JMSContainer配置 -->
+	<bean id="jmsContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+		<property name="connectionFactory" ref="jmsFactory"></property>
+		<property name="destination" ref="destinationTopic"></property>
+		<property name="messageListener" ref="messageListener"></property>
+	</bean>
+	
+</beans>
