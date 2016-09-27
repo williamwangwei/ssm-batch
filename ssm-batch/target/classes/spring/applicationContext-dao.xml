@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd">
+
+	<!-- 数据库连接池 -->
+	<!-- 加载配置文件 -->
+	<context:property-placeholder location="classpath:properties/*.properties" />
+	
+	<!-- 数据库连接池 -->
+	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
+		destroy-method="close">
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+		<property name="driverClassName" value="${jdbc.driver}" />
+		<property name="maxActive" value="10" />
+		<property name="minIdle" value="5" />
+	</bean>
+	<!-- 让spring管理sqlsessionfactory 使用mybatis和spring整合包中的 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<!-- 数据库连接池 -->
+		<property name="dataSource" ref="dataSource" />
+		<!-- 加载mybatis的全局配置文件 -->
+		<!-- <property name="configLocation" value="classpath:mybatis/SqlMapConfig.xml" /> -->
+		<property name="mapperLocations" value="classpath:com/william/batch/mapping/*.xml"></property>
+	</bean>
+	<!-- 配置扫描包  加载代理对象 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.william.batch.dao" />
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+	</bean>
+	
+	<!-- jdbcTemplate模板执行 -->
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	
+	<!-- 配置调度程序quartz ，其中配置JobDetail有两种方式-->  
+    <!--方式一：使用JobDetailBean，任务类必须实现Job接口 -->  
+    <!-- <bean id="myjob" class="org.springframework.scheduling.quartz.JobDetailBean">  
+        <property name="name" value="exampleJob"></property>  
+        <property name="jobClass" value="com.yangchangshou.SpringQtz"></property>  
+        <property name="jobDataAsMap">  
+            <map>  
+                <entry key="service">  
+                    <value>simple is the beat</value>  
+                </entry>  
+            </map>  
+        </property>  
+    </bean> -->  
+    <!--运行时请将方式一注释掉！ -->  
+    <!-- 
+        方式二：使用MethodInvokingJobDetailFactoryBean，任务类可以不实现Job接口，通过targetMethod指定调用方法 
+    -->  
+    <!-- 定义目标bean和bean中的方法 -->  
+    <!-- <bean id="SpringQtzJob" class="william.wangwei.quartz.SpringQtz02">  
+          
+    </bean>  
+      
+    <bean id="SpringQtzJobMethod"  
+        class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">  
+        <property name="targetObject">  
+            <ref bean="SpringQtzJob" />  
+        </property>  
+        <property name="targetMethod">  要执行的方法名称  
+            <value>execute02</value>  
+        </property>  
+    </bean>  
+  
+    ======================== 调度触发器 ========================  
+    <bean id="CronTriggerBean" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">  
+        <property name="jobDetail" ref="SpringQtzJobMethod"></property>  
+        <property name="cronExpression" value="0/5 * * * * ?"></property>  
+    </bean>  
+  
+    ======================== 调度工厂 ========================  
+    <bean id="SpringJobSchedulerFactoryBean"  
+        class="org.springframework.scheduling.quartz.SchedulerFactoryBean">  
+        <property name="triggers">  
+            <list>  
+                <ref bean="CronTriggerBean" />  
+            </list>  
+        </property>  
+    </bean> -->
+</beans>

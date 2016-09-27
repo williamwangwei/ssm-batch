@@ -120,4 +120,15 @@ public class BatchJobDefine {
     public void setTellerId(String tellerId) {
         this.tellerId = tellerId == null ? null : tellerId.trim();
     }
+
+	@Override
+	public String toString() {
+		return "BatchJobDefine [jobId=" + jobId + ", id=" + id + ", jobName=" + jobName + ", proName=" + proName
+				+ ", profileFlag=" + profileFlag + ", profileId=" + profileId + ", manualFlag=" + manualFlag
+				+ ", jobDetail=" + jobDetail + ", createDate=" + createDate + ", createUser=" + createUser
+				+ ", inputDate=" + inputDate + ", tellerId=" + tellerId + "]";
+	}
+    
+    
+    
 }

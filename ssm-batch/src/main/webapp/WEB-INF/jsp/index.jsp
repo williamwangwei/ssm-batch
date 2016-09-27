@@ -53,7 +53,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	}
 	/* 进入批处理系统 */
 	function enter2(){
-		window.location.href="xd/jy/index.html";
+		window.location.href="batch/index";
 	}
 	/* 进入交易系统 */
 	function enter3(){
