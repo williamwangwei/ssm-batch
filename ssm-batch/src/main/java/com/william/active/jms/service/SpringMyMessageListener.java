@@ -4,7 +4,6 @@ import javax.jms.Message;
 import javax.jms.MessageListener;
 import javax.jms.TextMessage;
 
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils.Text;
 
 public class SpringMyMessageListener implements MessageListener{
 
