@@ -7441,3 +7441,4 @@ Caused by: org.xml.sax.SAXParseException; lineNumber: 126; columnNumber: 65; 必
 [INFO][2016-10-19 00:07:47,449][org.springframework.web.servlet.handler.SimpleUrlHandlerMapping]Mapped URL path [/js/**] onto handler 'org.springframework.web.servlet.resource.ResourceHttpRequestHandler#1'
 [INFO][2016-10-19 00:07:47,452][org.springframework.web.servlet.handler.SimpleUrlHandlerMapping]Mapped URL path [/css/**] onto handler 'org.springframework.web.servlet.resource.ResourceHttpRequestHandler#2'
 [INFO][2016-10-19 00:07:47,535][org.springframework.web.servlet.DispatcherServlet]FrameworkServlet 'ww-batch': initialization completed in 1962 ms
+[INFO][2016-10-19 00:08:13,769][com.william.batch.controller.BatchController]进入首页！------------》
