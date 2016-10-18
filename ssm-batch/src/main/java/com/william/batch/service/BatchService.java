@@ -70,6 +70,7 @@ public class BatchService {
     }
 
 	public int insertBatchJobDefineS(BatchJobDefine record){
+		logger.info("insertBatchJobDefineS====================="+record);
     	return  batchJobDefineMapper.insert(record);
     }
 

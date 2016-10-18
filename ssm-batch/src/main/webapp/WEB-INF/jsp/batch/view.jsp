@@ -321,9 +321,9 @@ function getHeight() {
 		    </div> -->  
 		    
 		    <ul class="nav nav-tabs nav-justified" role="tablist">  
-		            <li class="active"><a href="<%=basePath%>/batch/index">任务列表</a></li>  
+		            <li><a href="<%=basePath%>/batch/index">任务列表</a></li>  
 		            <li><a href="<%=basePath%>/batch/add">新增任务</a></li>  
-		            <li><a href="<%=basePath%>/batch/view">查看详情</a></li>  
+		            <li class="active"><a href="<%=basePath%>/batch/view">查看详情</a></li>  
 		        </ul>  
 		    <div id="toolbar">
 				<button id="remove" class="btn btn-success" >

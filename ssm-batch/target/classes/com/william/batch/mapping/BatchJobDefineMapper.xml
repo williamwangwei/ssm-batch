@@ -108,17 +108,24 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.william.batch.model.BatchJobDefine" >
-    insert into BATCH_JOB_DEFINE (JOB_ID, ID, JOB_NAME, 
-      PRO_NAME, PROFILE_FLAG, PROFILE_ID, 
-      MANUAL_FLAG, JOB_DETAIL, CREATE_DATE, 
-      CREATE_USER, INPUT_DATE, TELLER_ID
-      )
-    values (#{jobId,jdbcType=VARCHAR}, #{id,jdbcType=DECIMAL}, #{jobName,jdbcType=VARCHAR}, 
-      #{proName,jdbcType=VARCHAR}, #{profileFlag,jdbcType=VARCHAR}, #{profileId,jdbcType=VARCHAR}, 
-      #{manualFlag,jdbcType=VARCHAR}, #{jobDetail,jdbcType=VARCHAR}, #{createDate,jdbcType=VARCHAR}, 
-      #{createUser,jdbcType=VARCHAR}, #{inputDate,jdbcType=VARCHAR}, #{tellerId,jdbcType=VARCHAR}
-      )
+  <insert id="insert" parameterType="com.william.batch.model.BatchJobDefine">
+  	<!-- <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+		SELECT LAST_INSERT_ID() AS id
+	</selectKey> -->
+         insert into BATCH_JOB_DEFINE (JOB_ID, JOB_NAME, 
+	      PRO_NAME, PROFILE_FLAG, PROFILE_ID, 
+	      MANUAL_FLAG, JOB_DETAIL, CREATE_DATE, 
+	      CREATE_USER, INPUT_DATE, TELLER_ID
+	      )
+	    values (#{jobId,jdbcType=VARCHAR}, #{jobName,jdbcType=VARCHAR}, 
+	      #{proName,jdbcType=VARCHAR}, #{profileFlag,jdbcType=VARCHAR}, #{profileId,jdbcType=VARCHAR}, 
+	      #{manualFlag,jdbcType=VARCHAR}, #{jobDetail,jdbcType=VARCHAR}, #{createDate,jdbcType=VARCHAR}, 
+	      #{createUser,jdbcType=VARCHAR}, #{inputDate,jdbcType=VARCHAR}, #{tellerId,jdbcType=VARCHAR}
+	      )
+      
+      <selectKey resultType="java.lang.Long" keyProperty="id" >
+        SELECT BATCH_JOB_DEFINE_ID_SEQ.CURRVAL AS id FROM DUAL
+      </selectKey>
   </insert>
   <insert id="insertSelective" parameterType="com.william.batch.model.BatchJobDefine" >
     insert into BATCH_JOB_DEFINE
