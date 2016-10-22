@@ -39,5 +39,20 @@ public class BatchJobDefineLogical {
 		logger.info("Logical====================="+batchJobDefine);
 		return batchJobDefine;
 	}
+
+	public BatchJobDefine updateBatchJobDefineS(BatchJobDefine batchJobDefine) {
+		batchService.updateBatchJobDefineByPrimaryKeyS(batchJobDefine);
+		return batchJobDefine;
+	}
+
+	public BatchJobDefine getBatchJobDefineS(String jobId) {
+		
+		return batchService.selectBatchJobDefineByPrimaryKeyS(jobId);
+		
+	}
+
+	public void deleteBatchJobDefineByIdS(String jobId) {
+		batchService.deleteBatchJobDefineByPrimaryKeyS(jobId);
+	}
 	
 }

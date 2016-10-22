@@ -103,21 +103,15 @@ function getHeight() {
 
 	$(function(){
 		var $table = $('#table'),
-		$remove = $('#remove');
+		$viewDetail = $('#viewDetail');
 		
-		$remove.click(function(){
-			alert("123");
+		$viewDetail.click(function(){
 			var rows = [];
 			rows = $table.bootstrapTable('getSelections');
 			if(rows!=null && rows.length == 1){
-				$.post("<%=basePath%>product/adminProductAction_testCloudLoanProduct",
-						{lowestPrice : rows[0].LOWEST_PRICE},
-						function(result) {
-							alert(result);
-						}
-				);
+				window.location.href = "<%=basePath%>batch/view?jobId="+rows[0].jobId;
 			}else{
-				alert("请选择一条产品测试");
+				alert("请选择一条查看详细情况!");
 			}
 		});
 		
@@ -247,18 +241,28 @@ function getHeight() {
 				forward(url);
     	    },
     	    'click .edit': function (e, value, row, index) {
-    	    	//var url = "<%=basePath%>/sys/productAction_showProduct.do?productId="+row.jobId+"&operateType=02";
-    	    	var url = "<%=basePath%>/batch/update";
+    	    	alert(row.jobId);
+    	    	var url = "<%=basePath%>/batch/update?jobId="+row.jobId;
 				forward(url);
     	    },
     	    'click .remove': function (e, value, row, index) {
     	    	var $table = $('#table');
     	    	var selections = [];
-    	    	selections[0] = row.jobId;
-    	    	$table.bootstrapTable('remove', {
-                    field: 'jobId',
-                    values: selections
-                });
+    	    	$.post(
+						"<%=basePath%>batch/deleteBatchJobDefine",
+						{jobId : row.jobId},
+						function(result) {
+							if(result.flag == 1){
+								$table.bootstrapTable('remove', {
+				                    field: 'jobId',
+				                    values: selections
+				                });
+							}else{
+								alert("删除失败！");
+							}
+						}
+				);
+    	    	
     	    }
     	};
 	//完成js跳转
@@ -323,11 +327,11 @@ function getHeight() {
 		    <ul class="nav nav-tabs nav-justified" role="tablist">  
 		            <li class="active"><a href="<%=basePath%>/batch/index">任务列表</a></li>  
 		            <li><a href="<%=basePath%>/batch/add">新增任务</a></li>  
-		            <li><a href="<%=basePath%>/batch/view">查看详情</a></li>  
+		            <li><a href="<%=basePath%>/batch/view">任务详情</a></li>  
 		        </ul>  
 		    <div id="toolbar">
-				<button id="remove" class="btn btn-success" >
-					<i class="glyphicon glyphicon-flag"></i> 测试ODM
+				<button id="viewDetail" class="btn btn-success" >
+					<i class="glyphicon glyphicon-flag"></i>查看详情
 				</button>
 			</div>
 			<table id="table"></table>

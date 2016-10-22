@@ -116,7 +116,7 @@
 
             // Use Ajax to submit form data
             $.post($form.attr('action'), $form.serialize(), function(result) {
-                console.log(result);
+                $("#id").val(result.batchJobDefine.id);
             }, 'json');
         });
 		
@@ -133,7 +133,15 @@
 		         success:function(data){  
 		        	 alert(data.batchJobDefine);
 		         }  
-		     }); --%>
+		     }); 
+		     
+		     $.post(
+						"<%=basePath%>batch/view",
+						{jobId : rows[0].jobId},
+						function(result) {
+							alert(result);
+						}
+				);--%>
 		     $('#form1').submit();
 		     
 			

@@ -1,5 +1,7 @@
 package com.william.batch.controller;
 
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,10 +14,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.william.batch.logical.BatchJobDefineLogical;
 import com.william.batch.model.BatchJobDefine;
@@ -47,26 +51,18 @@ public class BatchController {
 		logger.info("进入首页！------------》");
 		return "batch/index";
 	}
-	
-	
-	@RequestMapping("add")
-	public String add(){
-		logger.info("进入首页！------------》");
-		return "batch/add";
-	}
-	@RequestMapping("update")
-	public String update(){
-		logger.info("进入首页！------------》");
-		return "batch/update";
-	}
-	
-	@RequestMapping("view")
-	public String view(){
-		logger.info("进入首页！------------》");
-		return "batch/view";
-	}
-	
-	
+	/**
+	 * 分页获取BatchJobDefine信息
+	* @Title: list
+	* @Description: TODO(这里用一句话描述这个方法的作用)
+	* @param @param search
+	* @param @param order
+	* @param @param limit
+	* @param @param offset
+	* @param @return    设定文件
+	* @return MappingJacksonValue    返回类型
+	* @throws
+	 */
 	@RequestMapping("list")
 	@ResponseBody
 	public MappingJacksonValue list(String search,String order,int limit,int offset){
@@ -91,6 +87,12 @@ public class BatchController {
 		return jacksonValue;
 	}
 	
+	@RequestMapping("add")
+	public String add(){
+		logger.info("进入首页！------------》");
+		return "batch/add";
+	}
+	
 	/**
 	 * 保存BatchJobDefine值
 	* @Title: saveBatchJobDefine
@@ -101,13 +103,78 @@ public class BatchController {
 	 */
 	
 	@RequestMapping("/addBatchJobDefine")
-	public Map saveBatchJobDefine(@ModelAttribute BatchJobDefine batchJobDefine, HttpServletRequest request, HttpServletResponse response ){
+	@ResponseBody
+	public MappingJacksonValue saveBatchJobDefine(@ModelAttribute BatchJobDefine batchJobDefine, HttpServletRequest request, HttpServletResponse response ){
 		Map resMap = new HashMap<String, Object>();
 		
 		batchJobDefine = batchJobDefineLogical.saveAndReturnBatchJobDefineS(batchJobDefine);
 		
 		logger.info("Controller====================="+batchJobDefine);
 		resMap.put("batchJobDefine", batchJobDefine);
-		return resMap;
+		MappingJacksonValue jacksonValue =new MappingJacksonValue(resMap);
+		return jacksonValue;
 	}
+	
+	
+	@RequestMapping("update")
+	public ModelAndView update(String jobId){
+		logger.info("进入首页！------------》");
+		BatchJobDefine batchJobDefine = batchJobDefineLogical.getBatchJobDefineS(jobId);
+		logger.info(batchJobDefine);
+		Map<String,Object> data = new HashMap<String,Object>();  
+		data.put("batchJobDefine",batchJobDefine);  
+		return new ModelAndView("batch/update","batchJobDefine",batchJobDefine); 
+
+		//return "batch/view";
+	}
+	
+	@RequestMapping("/updateBatchJobDefine")
+	@ResponseBody
+	public MappingJacksonValue updateBatchJobDefine(@ModelAttribute BatchJobDefine batchJobDefine, HttpServletRequest request, HttpServletResponse response ){
+		Map resMap = new HashMap<String, Object>();
+		String message = "";
+		try{
+			batchJobDefine = batchJobDefineLogical.updateBatchJobDefineS(batchJobDefine);
+			message = "1";
+		}catch(Exception e){
+				message = e.getMessage();
+			
+		}
+		logger.info("Controller====================="+message);
+		resMap.put("message", message);
+		
+		MappingJacksonValue jacksonValue =new MappingJacksonValue(resMap);
+		return jacksonValue;
+	}
+	
+	@RequestMapping("/deleteBatchJobDefine")
+	@ResponseBody
+	public MappingJacksonValue deleteBatchJobDefine(String jobId ){
+		Map resMap = new HashMap<String,Object>();
+		batchJobDefineLogical.deleteBatchJobDefineByIdS(jobId);
+		logger.info("Controller====================="+jobId);
+		resMap.put("flag", 1);
+		MappingJacksonValue jacksonValue =new MappingJacksonValue(resMap);
+		return jacksonValue;
+		
+	}
+	
+	
+	@RequestMapping("view")
+	public ModelAndView view(String jobId){
+		logger.info("进入首页！------------》");
+		BatchJobDefine batchJobDefine = batchJobDefineLogical.getBatchJobDefineS(jobId);
+		logger.info(batchJobDefine);
+		Map<String,Object> data = new HashMap<String,Object>();  
+		data.put("batchJobDefine",batchJobDefine);  
+		return new ModelAndView("batch/view","batchJobDefine",batchJobDefine); 
+
+	}
+	
+	
+	
+	
+	
+
+	
 }

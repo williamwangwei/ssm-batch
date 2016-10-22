@@ -1,11 +1,10 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <%
 	String path = request.getContextPath();
-	String basePath = request.getScheme() + "://"
-			+ request.getServerName() + ":" + request.getServerPort()
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
-
+：<%@ page isELIgnored="false"%>。
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
@@ -16,25 +15,37 @@
 <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
 <meta name="description" content="">
 <meta name="author" content="">
-<link rel="icon" href="<%=basePath%>resource/bootstrap-3.3.5-dist/favicon.ico">
+<link rel="icon"
+	href="<%=basePath%>resource/bootstrap-3.3.5-dist/favicon.ico">
 <title>批处理列表</title>
 
 <!-- 1. 加载Bootstrap层叠样式表 -->
-<link href="<%=basePath%>resource/bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet">
-<link href="<%=basePath%>resource/bootstrap-tabler/dist/bootstrap-table.css" rel="stylesheet">
-<link href="<%=basePath%>resource/bootstrap-tabler/dist/bootstrap-editable.css" rel="stylesheet">
+<link href="<%=basePath%>resource/bootstrap-table-examples/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="<%=basePath%>resource/bootstrap-table-examples/assets/bootstrap-table/dist/bootstrap-table.min.css" rel="stylesheet">
+<%-- <link href="<%=basePath%>resource/bootstrap-tabler/dist/bootstrap-editable.css" rel="stylesheet"> --%>
+<!-- 添加验证css -->
+<link rel="stylesheet" href="<%=basePath%>resource/bootstrapvalidator/dist/css/bootstrapValidator.min.css"/>
 
 
 <!-- 2 jQuery库，同时加载该库必须在加载bootstrap.min.js之前 -->
 <!-- <script src="http://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script> -->
-<script src="<%=basePath%>resource/bootstrap-3.3.5-dist/jquery/jquery.js"></script>
+<script src="<%=basePath%>resource/bootstrap-table-examples/assets/jquery.min.js"></script>
 <!-- 3 Include all compiled plugins (below), or include individual files as needed -->
-<script src="<%=basePath%>resource/bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
+<script src="<%=basePath%>resource/bootstrap-table-examples/assets/bootstrap/js/bootstrap.min.js"></script>
+<!-- 添加验证JS -->
+<script type="text/javascript" src="<%=basePath%>resource/bootstrapvalidator/dist/js/bootstrapValidator.min.js"></script>
 
 
-<script src="<%=basePath%>resource/bootstrap-tabler/dist/bootstrap-table.js"></script>
+
+<script src="<%=basePath%>resource/bootstrap-tabler/dist/bootstrap-table.min.js"></script>
 <script src="<%=basePath%>resource/bootstrap-table-examples/assets/bootstrap-table/dist/extensions/export/bootstrap-table-export.js"></script>
-<script src="<%=basePath%>resource/bootstrap-tabler/dist/locale/bootstrap-table-zh-CN.js"></script>
+<script src="<%=basePath%>resource/bootstrap-table-examples/assets/bootstrap-table/dist/locale/bootstrap-table-zh-CN.js"></script>
+
+<!--[if lt IE 9]><script src="../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+<script src="<%=basePath%>resource/bootstrap-table-examples/assets/bootstrap-table/dist/ie-emulation-modes-warning.js"></script>
+
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<script src="<%=basePath%>resource/bootstrap-table-examples/assets/bootstrap-table/dist/ie10-viewport-bug-workaround.js"></script>
 
 
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -45,293 +56,273 @@
     <![endif]-->
 
 <script type="text/javascript">
-var selections = [];
+	//完成js跳转
+	function forward(url) {
+		window.location.href = url;
+	}
 
-function getIdSelections() {
-	var $table = $('#table');
-    return $.map($table.bootstrapTable('getSelections'), function (row) {
-        return row.LOWEST_PRICE;
-    });
-}
 
-function operateFormatter(value, row, index) {
-    return [
-        '<a class="like" href="javascript:void(0)" title="Like">',
-        '<i class="glyphicon glyphicon-heart"></i>',
-        '</a>  ',
-        '<a class="remove" href="javascript:void(0)" title="Remove">',
-        '<i class="glyphicon glyphicon-remove"></i>',
-        '</a>'
-    ].join('');
-}
+	$(function() {
+		$('#form1').bootstrapValidator({
+            message: 'This value is not valid',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+            	proName: {
+                    message: 'The proName is not valid',
+                    validators: {
+                        notEmpty: {
+                            message: 'The proName is required and can\'t be empty'
+                        },
+                        stringLength: {
+                            min: 6,
+                            max: 30,
+                            message: 'The proName must be more than 6 and less than 30 characters long'
+                        },
+                        /*remote: {
+                            url: 'remote.php',
+                            message: 'The username is not available'
+                        },*/
+                        regexp: {
+                            regexp: /^[a-zA-Z0-9_\.]+$/,
+                            message: 'The proName can only consist of alphabetical, number, dot and underscore'
+                        }
+                    }
+                },
+                jobDetail: {
+                    validators: {
+                        notEmpty: {
+                            message: 'The jobDetail address is required and can\'t be empty'
+                        },
+                        emailAddress: {
+                            message: 'The jobDetail is not a valid email address'
+                        }
+                    }
+                }
+            }
+        }).on('success.form.bv', function(e) {
+            // Prevent form submission
+            e.preventDefault();
 
-function totalTextFormatter(data) {
-    return 'Total';
-}
+            // Get the form instance
+            var $form = $(e.target);
+            
+            // Get the BootstrapValidator instance
+            var bv = $form.data('bootstrapValidator');
 
-function totalNameFormatter(data) {
-    return data.length;
-}
-
-function totalPriceFormatter(data) {
-    var total = 0;
-    $.each(data, function (i, row) {
-        total += +(row.price.substring(1));
-    });
-    return '$' + total;
-}
-
-function detailFormatter(index, row) {
-    var html = [];
-    $.each(row, function (key, value) {
-        html.push('<p><b>' + key + ':</b> ' + value + '</p>');
-    });
-    return html.join('');
-}
-
-function responseHandler(res) {
-    $.each(res.rows, function (i, row) {
-        row.state = $.inArray(row.id, selections) !== -1;
-    });
-    return res;
-}
-
-function getHeight() {
-    return $(window).height() - $('h1').outerHeight(true);
-	
-}
-
-	$(function(){
-		var $table = $('#table'),
-		$remove = $('#remove');
+            // Use Ajax to submit form data
+            $.post($form.attr('action'), $form.serialize(), function(result) {
+                if(result.message == "1"){
+                	//更新成功
+                	showSuccessInfo("OK   成功啦！！");
+                }else{
+                	//更新失败
+                	showFailedInfo(result.message);
+                }
+            }, 'json');
+        });
 		
-		$remove.click(function(){
-			alert("123");
-			var rows = [];
-			rows = $table.bootstrapTable('getSelections');
-			if(rows!=null && rows.length == 1){
-				$.post("<%=basePath%>product/adminProductAction_testCloudLoanProduct",
-						{lowestPrice : rows[0].LOWEST_PRICE},
-						function(result) {
-							alert(result);
-						}
-				);
-			}else{
-				alert("请选择一条产品测试");
-			}
+		$("#save").click(function(){
+			
+			<%-- var formParam = $("#form1").serialize();//序列化表格内容为字符串  
+			alert(formParam);
+		     $.ajax({  
+		         type:'post',      
+		        url:'<%=basePath%>batch/addBatchJobDefine',  
+		         data:formParam,  
+		         cache:false,  
+		         dataType:'json',  
+		         success:function(data){  
+		        	 alert(data.batchJobDefine);
+		         }  
+		     }); --%>
+		     $('#form1').submit();
+		     
+			
+			return false; 
 		});
 		
-		$('#table').bootstrapTable({
-			locale:"zh-US" ,
-			height: getHeight(),
-		    url: '<%=basePath%>batch/list',
-							search : true,
-							showExport : true,
-							showToggle : true,
-							showRefresh : true,
-							showColumns : true,
-							toolbar : '#toolbar',
-							pagination : true,
-							pageList : '[10, 25, 50, 100, ALL]',
-							showFooter : false,
-							showPaginationSwitch : true,
-							idField : 'id',
-							detailView : true,
-							detailFormatter : 'detailFormatter',
-							sidePagination : 'server',
-							responseHandler : 'responseHandler',
-							columns : [
-						           [
-				                    {
-				                        field: 'state',
-				                        checkbox: true,
-				                        rowspan: 1,
-				                        align: 'center',
-				                        valign: 'middle'
-				                    }, {
-				                        title: '工作编号',
-				                        field: 'jobId',
-				                        rowspan: 1,
-				                        align: 'center',
-				                        valign: 'middle',
-				                        sortable: true,
-				                    }, {
-				                        title: '工作名称',
-				                        field: 'jobName',
-				                        rowspan: 1,
-				                        align: 'center',
-				                        valign: 'middle',
-				                        sortable: true,
-				                    }, {
-				                        title: '工作方法',
-				                        field: 'proName',
-				                        rowspan: 1,
-				                        align: 'center',
-				                        valign: 'middle',
-				                        sortable: true,
-				                        visible:true
-				                    }, {
-				                        title: '操作标志',
-				                        field: 'manualFlag',
-				                        rowspan: 1,
-				                        align: 'center',
-				                        valign: 'middle',
-				                        sortable: true,
-				                        visible:true
-				                    }, {
-				                        title: '创建时间',
-				                        field: 'createDate',
-				                        rowspan: 1,
-				                        align: 'center',
-				                        valign: 'middle',
-				                        sortable: true,
-				                        visible:true
-				                    }, {
-				                        title: '创建者',
-				                        field: 'createUser',
-				                        rowspan: 1,
-				                        align: 'center',
-				                        valign: 'middle',
-				                        sortable: true,
-				                        visible:true
-				                    }, {
-				                        title: '输入时间',
-				                        field: 'inputDate',
-				                        rowspan: 1,
-				                        align: 'center',
-				                        valign: 'middle',
-				                        sortable: true,
-				                        visible:true
-				                    }, {
-				                        title: '柜员编号',
-				                        field: 'tellerId',
-				                        rowspan: 1,
-				                        align: 'center',
-				                        valign: 'middle',
-				                        sortable: true,
-				                        visible:true
-				                    }, {
-				                        title: '操作',
-				                        field: 'action',
-				                        rowspan: 1,
-				                        align: 'center',
-				                        valign: 'middle',
-				                        sortable: false,
-				                        visible:true,
-				                        formatter:actionFormatter,
-				                        events:actionEvents
-				                    }
-				                ]
-							]
-						});
-
+		$("#popTitle").click(function(){
+			
+			/* $('#myModal').modal({
+			    backdrop:true,
+			    keyboard:true,
+			    show:true
+			}); */
+			showSuccessInfo("成功啦！！");
+			return false; 
+		});
+		
+		$("#display").click(function(){
+			
+			//$("#alert-user").attr("class","alert alert-danger"); 
+			showFailedInfo("失败了----");
+			return false; 
+		});
 	});
-
-	function actionFormatter(value, row, index) {
-        return [
-            '<a class="like" href="javascript:void(0)" title="Like">',
-            '<i class="glyphicon glyphicon-plus"></i>',
-            '</a>',
-            '<a class="edit ml10" href="javascript:void(0)" title="Edit">',
-            '<i class="glyphicon glyphicon-edit"></i>',
-            '</a>',
-            '<a class="remove ml10" href="javascript:void(0)" title="Remove">',
-            '<i class="glyphicon glyphicon-remove"></i>',
-            '</a>'
-        ].join('');
-    }
 	
-	window.actionEvents = {
-    	    'click .like': function (e, value, row, index) {
-    	    	var url = "<%=basePath%>/batch/add";
-				forward(url);
-    	    },
-    	    'click .edit': function (e, value, row, index) {
-    	    	//var url = "<%=basePath%>/sys/productAction_showProduct.do?productId="+row.jobId+"&operateType=02";
-    	    	var url = "<%=basePath%>/batch/update";
-				forward(url);
-    	    },
-    	    'click .remove': function (e, value, row, index) {
-    	    	var $table = $('#table');
-    	    	var selections = [];
-    	    	selections[0] = row.jobId;
-    	    	$table.bootstrapTable('remove', {
-                    field: 'jobId',
-                    values: selections
-                });
-    	    }
-    	};
-	//完成js跳转
-	function forward(url){
-		window.location.href=url;
+	function showSuccessInfo(info){
+		
+		$(".modal-body").text(info);
+		$('#myModal').modal({
+		    backdrop:true,
+		    keyboard:true,
+		    show:true
+		});
 	}
 	
-	window.operateEvents = {
-		'click .like' : function(e, value, row, index) {
-			alert('You click like action, row: ' + JSON.stringify(row));
-		},
-		'click .remove' : function(e, value, row, index) {
-			$table = $("#table");
-			$table.bootstrapTable('remove', {
-				field : 'id',
-				values : [ row.id ]
-			});
-		}
-	};
-	
-	$(function(){
-		
-		$("#home").click(function(){
-			
-			alert("家   家 --------");
-		});
-		
-	});
+	function showFailedInfo(info){
+		$("#alert-user strong").text(info);
+		$("#alert-user").attr("class","alert alert-danger"); 
+	}
 </script>
 </head>
 
 <body>
 
 	<div class="container">
+
+		<ul class="nav nav-tabs nav-justified" role="tablist">
+			<li><a href="<%=basePath%>/batch/index">任务列表</a></li>
+			<li class="active"><a href="<%=basePath%>/batch/add">修改任务</a></li>
+			<li><a href="<%=basePath%>/batch/view">任务详情</a></li>
+		</ul>
+		<div id="toolbar">
+
+			<button id="back" class="btn btn-success" onclick="history.go(-1)">
+				<i class="glyphicon glyphicon-arrow-left"></i> 回退
+			</button>
+
+			<button id="remove" class="btn btn-success">
+				<i class="glyphicon glyphicon-flag"></i> 测试ODM
+			</button>
+
+			<button id="save" class="btn btn-success">
+				<i class="glyphicon glyphicon-flag"></i> 保存
+			</button>
+			
+			<button id="popTitle" class="btn btn-success">
+				<i class="glyphicon glyphicon-flag"></i> 模态对话框JS
+			</button>
+			<button id="display" class="btn btn-success">
+				<i class="glyphicon glyphicon-flag"></i> 显示提示信息
+			</button>
+			
+			<!-- Button trigger modal -->
+			<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+			  	<i class="glyphicon glyphicon-flag"></i>模态对话框
+			</button>
 		
-		<!-- <ul class="nav nav-tabs" role="tablist">
-		  <li role="presentation" class="active"><a href="javascript:return false;" id="home">Home</a></li>
-		  <li role="presentation"><a href="javascript:return false;" id="profile">Profile</a></li>
-		  <li role="presentation"><a href="javascript:return false;" id="messages">Messages</a></li>
-		</ul> -->
+		</div>
+
+		<div id="alert-user" class="alert alert-danger hidden" role="alert">
+			<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+		    <strong>错误：</strong>
+		</div>
 		
-		    <!-- 一个页面  多个叶签
-		    <div class="tabbable">  
-		        <ul class="nav nav-tabs nav-justified" role="tablist">  
-		            <li class="active"><a href="#1" data-toggle="tab">任务列表</a></li>  
-		            <li><a href="#tt" data-toggle="tab">新增任务</a></li>  
-		            <li><a href="#3" data-toggle="tab">查看详情</a></li>  
-		        </ul>  
-		        <div class="tab-content">  
-		            <div class="tab-pane active" id="1">  
-		           			任务列表
-		            </div>  
-		            <div id="tt" class="tab-pane">  
-		                	新增任务  
-		            </div>  
-		            <div id="3" class="tab-pane">  
-		                	查看详情
-		            </div>  
-		        </div>  
-		    </div> -->  
-		    
-		    <ul class="nav nav-tabs nav-justified" role="tablist">  
-		            <li><a href="<%=basePath%>/batch/index">任务列表</a></li>  
-		            <li class="active"><a href="<%=basePath%>/batch/add">修改任务</a></li>  
-		            <li><a href="<%=basePath%>/batch/view">查看详情</a></li>  
-		        </ul>  
-		    <div id="toolbar">
-				<button id="remove" class="btn btn-success" >
-					<i class="glyphicon glyphicon-flag"></i> 测试ODM
-				</button>
+		<div>
+
+			<div class="row">
+				<form role="form" id="form1" action="<%=basePath%>batch/updateBatchJobDefine" method="post">
+					<div class="col-md-6">
+
+						<div class="form-group">
+							<label for="jobId">jobId</label> 
+							<input type="text" class="form-control" id="jobId" name="jobId" value="${batchJobDefine.jobId}" placeholder="Enter jobId">
+							<!-- <span class="glyphicon glyphicon-ok form-control-feedback"></span> -->
+						</div>
+						<div class="form-group">
+							<label for="proName">proName</label> 
+							<input type="text" class="form-control" id="proName" name="proName" value=${batchJobDefine.proName } placeholder="Enter proName">
+						</div>
+						<div class="form-group">
+							<label for="profileFlag">text profileFlag</label> 
+							<input type="text" class="form-control" id="profileFlag" name="profileFlag" value="${batchJobDefine.profileFlag }" placeholder="Enter profileFlag">
+						</div>
+						<div class="form-group">
+							<label for="profileId">profileId</label> 
+							<input type="text" class="form-control" id="profileId" name="profileId" value="${batchJobDefine.profileId }" placeholder="profileId">
+						</div>
+						<div class="form-group">
+							<label for="manualFlag">text manualFlag</label> 
+							<input type="text" class="form-control" id="manualFlag" name="manualFlag" value="${batchJobDefine.manualFlag }" placeholder="Enter manualFlag">
+						</div>
+						<div class="form-group">
+							<label for="jobDetail">jobDetail</label> 
+							<input type="text" class="form-control" id="jobDetail" name="jobDetail" value="${batchJobDefine.jobDetail }" placeholder="Enter jobDetail">
+						</div>
+
+
+
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label for="jobName">jobName</label> 
+							<input type="text" class="form-control" id="jobName" name="jobName" value="${batchJobDefine.jobName }" placeholder="Enter jobName">
+						</div>
+						<div class="form-group">
+							<label for="createDate">createDate</label> 
+							<input type="date" class="form-control" id="createDate" name="createDate" value="${batchJobDefine.createDate }" placeholder="createDate">
+						</div>
+						<div class="form-group">
+							<label for="createUser">text createUser</label> 
+							<input type="text" class="form-control" id="createUser" name="createUser" value="${batchJobDefine.createUser }" placeholder="Enter createUser">
+						</div>
+						<div class="form-group">
+							<label for="inputDate">inputDate</label> 
+							<input type="date" class="form-control" id="inputDate" name="inputDate" value="${batchJobDefine.inputDate }" placeholder="inputDate">
+						</div>
+						<div class="form-group">
+							<label for="tellerId">text tellerId</label> 
+							<input type="text" class="form-control" id="tellerId" name="tellerId" value="${batchJobDefine.tellerId }" placeholder="Enter tellerId">
+						</div>
+						<div class="form-group">
+							<label for="id">id</label> 
+							<input type="text" class="form-control" id="id" name="id" value="${batchJobDefine.id }" placeholder="id" >
+						</div>
+					</div>
+				</form>
 			</div>
-			<table id="table"></table>
+
+		</div>
+
+
+		<!-- Modal -->
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+		        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+		      </div>
+		      <div class="modal-body">
+		        ...
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		        <button type="button" class="btn btn-primary">Save changes</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
 		
+		
+		<div id="alertTest" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		    <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		        <h3 id="myModalLabel">提示标题</h3>
+		    </div>
+		    <div class="modal-body">
+		        <p>提示内容！</p>
+		    </div>
+		    <div class="modal-footer">
+		        <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+		    </div>
+		</div>
+				
 	</div>
 
 

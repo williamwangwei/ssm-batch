@@ -315,7 +315,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.william.batch.model.BatchJobDefine" >
     update BATCH_JOB_DEFINE
-    set ID = #{id,jdbcType=DECIMAL},
+    set
       JOB_NAME = #{jobName,jdbcType=VARCHAR},
       PRO_NAME = #{proName,jdbcType=VARCHAR},
       PROFILE_FLAG = #{profileFlag,jdbcType=VARCHAR},
